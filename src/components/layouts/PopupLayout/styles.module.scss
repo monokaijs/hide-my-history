@@ -1,0 +1,17 @@
+.popupLayout {
+  width: 400px;
+  height: 200px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  .title {
+    margin: 0;
+  }
+  .description {
+    padding: 8px 0;
+  }
+  .content {
+    display: flex;
+    flex: 1;
+  }
+}

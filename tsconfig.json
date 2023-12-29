@@ -5,12 +5,15 @@
   ],
   "include": [
     ".plasmo/index.d.ts",
+    "./src/types/**/*.d.ts",
     "./**/*.ts",
     "./**/*.tsx"
   ],
   "compilerOptions": {
+    "verbatimModuleSyntax": false,
     "paths": {
-      "~*": ["./src/*"]
+      "~*": ["./src/*"],
+      "@/*": ["./src/*"]
     },
     "baseUrl": "."
   }
