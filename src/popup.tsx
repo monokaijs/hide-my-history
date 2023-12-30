@@ -4,10 +4,10 @@ import PopupLayout from "@/components/layouts/PopupLayout";
 import {Button} from "antd";
 import {SettingFilled} from "@ant-design/icons";
 import {useAppDispatch, useAppSelector} from "~redux/store";
-import {setTheme} from "~redux/slices/app.slice";
+import {setIncognitoMode, setTheme} from "~redux/slices/app.slice";
 
 function PopupContent() {
-  const {theme} = useAppSelector(state => state.app);
+  const {incognitoMode} = useAppSelector(state => state.app);
   const dispatch = useAppDispatch();
   return <div className={styles.pageContent}>
     <div className={styles.buttons}>
@@ -15,10 +15,10 @@ function PopupContent() {
         type={'primary'}
         className={styles.btnMode}
         onClick={() => {
-          dispatch(setTheme(theme === 'light' ? 'dark' : 'light'))
+          dispatch(setIncognitoMode(!incognitoMode));
         }}
       >
-        Incognito Mode
+        {incognitoMode ? 'Disable Incognito Mode': 'Enable Incognito Mode'}
       </Button>
       <Button
         type={'primary'}

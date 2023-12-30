@@ -7,13 +7,12 @@ import createChromeStorage from 'redux-persist-chrome-storage';
 import {appSlice, AppSliceState} from "~redux/slices/app.slice";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 
-const storage = createChromeStorage(window.chrome, 'local');
+const storage = createChromeStorage(chrome, 'local');
 
 const combinedReducer = combineReducers({
   app: persistReducer<any>({
     key: 'app',
     storage,
-    whitelist: ['theme', 'recentEmojis', 'pinnedStoryBuckets'],
     stateReconciler: autoMergeLevel2,
   }, appSlice.reducer),
 });

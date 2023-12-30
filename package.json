@@ -35,7 +35,9 @@
       "https://*/*"
     ],
     "permissions": [
-      "storage"
+      "storage",
+      "history",
+      "webNavigation"
     ]
   }
 }

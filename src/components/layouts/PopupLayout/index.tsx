@@ -9,7 +9,7 @@ interface PopupLayoutProps {
 }
 
 function PopupLayoutContent({children}: any) {
-  const {theme: appTheme} = useAppSelector(state => state.app);
+  const {incognitoMode} = useAppSelector(state => state.app);
   return <PersistGate persistor={persistor} loading={null}>
     <ConfigProvider
       theme={{
@@ -17,7 +17,7 @@ function PopupLayoutContent({children}: any) {
           fontFamily: 'Lexend Deca',
           fontSize: 14,
         },
-        algorithm: appTheme === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
+        algorithm: incognitoMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }}
     >
       <Layout className={styles.popupLayout}>
