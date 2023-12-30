@@ -6,26 +6,37 @@ const store: {
 } = {
   app: {},
 }
+
+const updateStoreData = (key: string, sliceData: any) => {
+  const parsedData = {};
+  for (let sliceKey of Object.keys(sliceData)) {
+    parsedData[sliceKey] = JSON.parse(sliceData[sliceKey]);
+  }
+  store[key] = parsedData;
+
+  // on update
+  Promise.all([
+    chrome.action.setBadgeText({
+      text: store.app.incognitoMode ? 'ON': 'OFF',
+    }),
+    chrome.action.setBadgeBackgroundColor({
+      color: store.app.incognitoMode ? '#000000': '#ff4747',
+    })
+  ]).then(() => null);
+}
+
 const startup = async () => {
   for (let key of Object.keys(store)) {
     const persistedData = await chrome.storage.local.get(['persist:' + key]);
     const sliceData = JSON.parse(persistedData['persist:' + key]);
-    const parsedData = {};
-    for (let sliceKey of Object.keys(sliceData)) {
-      parsedData[sliceKey] = JSON.parse(sliceData[sliceKey]);
-    }
-    store[key] = parsedData;
+    updateStoreData(key, sliceData);
   }
 
   chrome.storage.local.onChanged.addListener(changes => {
-    if (changes['persist:app']) {
+    for (let key of Object.keys(store)) {
       // App settings updated
-      const sliceData = JSON.parse(changes['persist:app'].newValue);
-      const parsedData = {};
-      for (let sliceKey of Object.keys(sliceData)) {
-        parsedData[sliceKey] = JSON.parse(sliceData[sliceKey]);
-      }
-      store.app = parsedData;
+      const sliceData = JSON.parse(changes['persist:' + key].newValue);
+      updateStoreData(key, sliceData);
     }
   })
 
