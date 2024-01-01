@@ -23,6 +23,9 @@ function PopupContent() {
         {incognitoMode ? 'Disable Incognito Mode' : 'Enable Incognito Mode'}
       </Button>
       <Button
+        onClick={() => {
+          chrome.runtime.openOptionsPage();
+        }}
         icon={<FontAwesomeIcon icon={faGear}/>}
       />
     </div>

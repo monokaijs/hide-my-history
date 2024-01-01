@@ -38,18 +38,21 @@ const startup = async () => {
       const sliceData = JSON.parse(changes['persist:' + key].newValue);
       updateStoreData(key, sliceData);
     }
+  });
+
+  chrome.history.onVisited.addListener(result => {
+    console.log(result);
   })
 
-  chrome.webNavigation.onCompleted.addListener(details => {
-    if (details.url && details.timeStamp && store.app.incognitoMode) {
-      const startTime = store.app.incognitoTime;
-      const endTime = details.timeStamp + 1000;
-
-      chrome.history.deleteRange({startTime, endTime}, () => {
-        // do nothing here ;)
-      });
-    }
-  }, {url: [{urlMatches: 'http://*/*'}, {urlMatches: 'https://*/*'}]});
+  // chrome.webNavigation.onBeforeNavigate.addListener(details => {
+  //   console.log('event', details);
+  //   if (details.url && details.timeStamp && store.app.incognitoMode && details.frameType === 'outermost_frame') {
+  //     console.log('clean', details.url);
+  //     chrome.history.deleteUrl({
+  //       url: details.url
+  //     });
+  //   }
+  // }, {url: [{urlMatches: 'http://*/*'}, {urlMatches: 'https://*/*'}]});
 }
 startup().then(() => {
   console.log('Background startup successfully.');
