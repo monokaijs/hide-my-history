@@ -6,3 +6,23 @@ export function getFavIcon(u: string) {
   url.searchParams.set("size", "32");
   return url.toString();
 }
+
+export function urlToChromeMatchPattern(url: string): string {
+  try {
+    const urlObj = new URL(url);
+
+    // Extract the domain name and ignore any subdomain distinctions, including 'www'
+    let domain = urlObj.hostname;
+
+    // Prefix with '*.' to match all subdomains, including 'www'
+    if (!domain.startsWith('*.')) {
+      domain = `*.${domain}`;
+    }
+
+    // Construct the match pattern with wildcards for protocol and path
+    return `*://${domain}/*`;
+  } catch (e) {
+    console.error('Invalid URL:', e);
+    return '';
+  }
+}

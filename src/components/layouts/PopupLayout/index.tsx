@@ -35,7 +35,7 @@ function PopupLayoutContent({children}: any) {
               You're in Incognito Mode. No worries, browsing histories are not recorded.
             </>}
             {!incognitoMode && <>
-              You're not in Incognito Mode.
+              You're not in Incognito Mode. However, websites in whitelist will not be recorded in browser history.
             </>}
           </Typography.Text>
           <div className={styles.content}>

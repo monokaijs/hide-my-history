@@ -6,14 +6,12 @@ export interface AppSliceState {
   theme: ThemeType;
   incognitoMode: boolean;
   incognitoTime: number;
-  whitelisted: WhitelistedUrl[];
 }
 
 const initialState: AppSliceState = {
   theme: 'light',
   incognitoMode: false,
   incognitoTime: 0,
-  whitelisted: [],
 };
 
 export const appSlice = createSlice({
