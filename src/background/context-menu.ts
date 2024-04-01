@@ -22,9 +22,9 @@ export async function backgroundContextMenuStartup() {
       const domain = url.hostname;
 
       if (info.menuItemId === 'blacklist') {
-        updateList(domain, DomainType.blacklist);
+        updateList(domain, (info.wasChecked && !info.checked) ? DomainType.undecided : DomainType.blacklist);
       } else if (info.menuItemId === 'whitelist') {
-        updateList(domain, DomainType.whitelist);
+        updateList(domain, (info.wasChecked && !info.checked) ? DomainType.undecided : DomainType.whitelist);
       }
     }
     unifiedStore.setSlice('app', appSlice);
