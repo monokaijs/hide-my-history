@@ -5,29 +5,43 @@ import {Button} from "antd";
 import {useAppDispatch, useAppSelector} from "~redux/store";
 import {setIncognitoMode} from "~redux/slices/app.slice";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faEyeSlash, faGear} from "@fortawesome/free-solid-svg-icons";
+import {faEye, faEyeSlash, faGear, faKey} from "@fortawesome/free-solid-svg-icons";
 
 function PopupContent() {
   const {incognitoMode} = useAppSelector(state => state.app);
+  const {encryptedPrivateKey} = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   return <div className={styles.pageContent}>
     <div className={styles.buttons}>
-      <Button
-        type={'primary'}
-        className={styles.btnMode}
-        icon={<FontAwesomeIcon icon={incognitoMode ? faEyeSlash : faEye}/>}
-        onClick={() => {
-          dispatch(setIncognitoMode(!incognitoMode));
-        }}
-      >
-        {incognitoMode ? 'Disable Incognito Mode' : 'Enable Incognito Mode'}
-      </Button>
-      <Button
-        onClick={() => {
-          chrome.runtime.openOptionsPage();
-        }}
-        icon={<FontAwesomeIcon icon={faGear}/>}
-      />
+      {encryptedPrivateKey ? <>
+        <Button
+          type={'primary'}
+          className={styles.btnMode}
+          icon={<FontAwesomeIcon icon={incognitoMode ? faEyeSlash : faEye}/>}
+          onClick={() => {
+            dispatch(setIncognitoMode(!incognitoMode));
+          }}
+        >
+          {incognitoMode ? 'Disable Incognito Mode' : 'Enable Incognito Mode'}
+        </Button>
+        <Button
+          onClick={() => {
+            chrome.runtime.openOptionsPage();
+          }}
+          icon={<FontAwesomeIcon icon={faGear}/>}
+        />
+      </>: <>
+        <Button
+          type={'primary'}
+          className={styles.btnMode}
+          icon={<FontAwesomeIcon icon={faKey}/>}
+          onClick={() => {
+            return chrome.runtime.openOptionsPage();
+          }}
+        >
+          Create Master Key
+        </Button>
+      </>}
     </div>
   </div>;
 }

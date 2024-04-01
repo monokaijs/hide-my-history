@@ -1,5 +1,37 @@
+export interface HistoryStoredItem {
+  url: string;
+  title: string;
+  time: number;
+}
+
 class HistoryService {
+  maxLength: number = 100;
+  items: HistoryStoredItem[] = [];
   constructor() {
+  }
+
+  async register() {
+    this.items = await this.getStoredEntry();
+  }
+
+  async getStoredEntry(): Promise<HistoryStoredItem[]> {
+    const response = await chrome.storage.local.get(['historyItems']);
+    return response['historyItems'] || [];
+  }
+
+  async addStoredEntry(historyItem: chrome.history.HistoryItem): Promise<HistoryStoredItem[]> {
+    const items = this.items;
+    items.unshift({
+      url: historyItem.url,
+      time: historyItem.lastVisitTime,
+      title: historyItem.title,
+    });
+    if (items.length > this.maxLength) items.length = this.maxLength;
+    this.items = items;
+    chrome.storage.local.set({
+      historyItems: items,
+    }).then(() => null);
+    return items;
   }
 
   // Query browsing history based on time range

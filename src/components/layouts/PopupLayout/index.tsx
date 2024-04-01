@@ -12,6 +12,7 @@ interface PopupLayoutProps {
 
 function PopupLayoutContent({children}: any) {
   const {incognitoMode} = useAppSelector(state => state.app);
+  const {encryptedPrivateKey} = useAppSelector(state => state.auth);
   return <PersistGate persistor={persistor} loading={null}>
     <ConfigProvider
       theme={{
@@ -28,17 +29,26 @@ function PopupLayoutContent({children}: any) {
         <Typography.Title level={3} className={styles.title}>
           Hide My History
         </Typography.Title>
-        <Typography.Text className={styles.description}>
-          {incognitoMode && <>
-            You're in Incognito Mode. No worries, browsing histories are not recorded.
-          </>}
-          {!incognitoMode && <>
-            You're not in Incognito Mode.
-          </>}
-        </Typography.Text>
-        <div className={styles.content}>
-          {children}
-        </div>
+        {encryptedPrivateKey ? <>
+          <Typography.Text className={styles.description}>
+            {incognitoMode && <>
+              You're in Incognito Mode. No worries, browsing histories are not recorded.
+            </>}
+            {!incognitoMode && <>
+              You're not in Incognito Mode.
+            </>}
+          </Typography.Text>
+          <div className={styles.content}>
+            {children}
+          </div>
+        </>: <>
+          <Typography.Text className={styles.description}>
+            Hi there, this seems to be your first time using this Extension. A master password is required.
+          </Typography.Text>
+          <div className={styles.content}>
+            {children}
+          </div>
+        </>}
       </Layout>
     </ConfigProvider>
   </PersistGate>;
