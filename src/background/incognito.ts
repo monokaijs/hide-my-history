@@ -16,7 +16,7 @@ export async function incognitoModeStartup() {
   });
 
   chrome.history.onVisited.addListener(async historyItem => {
-    const urlLists = unifiedStore.rawData['hmh-lists'];
+    const urlLists = unifiedStore.rawData['hmh-lists'] || {};
     const url = new URL(historyItem.url);
     const store = unifiedStore.getStore();
     if (historyItem.url.startsWith('chrome-extension://')) return;

@@ -40,7 +40,6 @@ function DashboardLayoutContent({children}: any) {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#333333',
           fontFamily: 'Lexend Deca',
           fontSize: 14,
         },

@@ -19,11 +19,13 @@ export default function SetupPasswordPage() {
     setLoading(true);
     const keyPair = await generateKeyPairEncrypted(password);
     dispatch(setAuthData({
-      encryptedPrivateKey: keyPair.privateKey,
+      loggedIn: true,
+      privateKey: keyPair.privateKey,
+      encryptedPrivateKey: keyPair.encryptedPrivateKey,
       publicKey: keyPair.publicKey,
     }));
     message.success("Master password created. Login to access features now!");
-    navigate('/auth/login');
+    navigate('/');
     setLoading(false);
   }
 

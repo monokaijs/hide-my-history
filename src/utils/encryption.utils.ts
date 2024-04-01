@@ -64,9 +64,11 @@ export async function generateKeyPair() {
 
 export async function generateKeyPairEncrypted(password: string) {
   const keyPair = await generateKeyPair();
-  keyPair.privateKey = await encryptWithPassword(keyPair.privateKey, password);
 
-  return keyPair;
+  return {
+    ...keyPair,
+    encryptedPrivateKey: await encryptWithPassword(keyPair.privateKey, password),
+  };
 }
 
 export async function encryptDataWithPublicKey(publicKeyPem: string, data: string): Promise<string> {
