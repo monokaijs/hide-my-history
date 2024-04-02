@@ -1,0 +1,31 @@
+.home {
+  .widgets {
+    @apply flex flex-grow gap-3 p-3;
+    .widget {
+      @apply flex-1 flex flex-col border p-2 shadow rounded relative overflow-hidden;
+      height: 100px;
+
+      .figure-icon {
+        @apply absolute -right-2 -bottom-2 text-7xl text-gray-100 rotate-6 transition-all ease-in-out duration-300;
+      }
+
+      &:hover {
+        .figure-icon {
+          @apply rotate-12 text-8xl;
+        }
+      }
+
+      .meta {
+        @apply flex-1 z-10;
+
+        .title {
+          @apply font-bold;
+        }
+
+        .description {
+          @apply mb-2;
+        }
+      }
+    }
+  }
+}
