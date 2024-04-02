@@ -1,4 +1,6 @@
-## Hide My History
+<img src="./assets/icon.png" alt="drawing" width="100"/>
+
+# Hide My History
 
 A good extension to hide your secrets in the deepest area of your browser.
 
@@ -51,9 +53,9 @@ Feel free to add anything you want, make a PR and you are welcomed here!
 
 ### Author
 
-Edward Nguyen written this in his toilet time. Just for fun, no need to say thank you (Send me 1 BTC would be much
+**Edward Nguyen** written this in his toilet time. Just for fun, no need to say thank you (Send me 1 BTC would be much
 appreciated).
 
-Any problem, contact: monokaijs@gmail.com
+My website: https://delimister.com
 
-His website: https://delimister.com
+Any problem, contact: [monokaijs@gmail.com](mailto:monokaijs@gmail.com)
