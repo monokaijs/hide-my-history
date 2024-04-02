@@ -7,6 +7,7 @@ import HistoryPage from "@/views/History";
 import AuthLayout from "~components/layouts/AuthLayout";
 import LoginPage from "~views/Auth/Login";
 import SetupPasswordPage from "~views/Auth/SetupPassword";
+import AboutPage from "~views/About";
 
 export default function OptionsPage() {
   return <HashRouter>
@@ -14,6 +15,7 @@ export default function OptionsPage() {
       <Route path={'/'} element={<DashboardLayout/>}>
         <Route index element={<HomePage/>}/>
         <Route path={'history'} element={<HistoryPage/>}/>
+        <Route path={'about'} element={<AboutPage/>}/>
         <Route path={'*'} element={<Navigate to={'/'}/>}/>
       </Route>
       <Route path={'/auth'} element={<AuthLayout/>}>

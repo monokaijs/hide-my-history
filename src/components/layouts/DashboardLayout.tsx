@@ -3,7 +3,7 @@ import {PersistGate} from "redux-persist/integration/react";
 import {Provider} from "react-redux";
 import {Outlet, useLocation, useNavigate} from "react-router";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faClock, faGear, faHome, IconDefinition} from "@fortawesome/free-solid-svg-icons";
+import {faClock, faGear, faHome, faInfoCircle, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {useEffect} from "react";
 import {cn} from "~utils";
 
@@ -54,7 +54,7 @@ function DashboardLayoutContent({children}: any) {
           </div>
           <div className={'bottom-menu'}>
             <MenuItem
-              path={'/settings'} icon={faGear} label={'Settings'}
+              path={'/about'} icon={faInfoCircle} label={'About'}
             />
           </div>
         </div>
