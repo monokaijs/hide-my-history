@@ -1,63 +1,66 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRight, faEye, faInfo, faKey, faLock, faWarning} from "@fortawesome/free-solid-svg-icons";
+import {faInfoCircle, faLock, faWarning} from "@fortawesome/free-solid-svg-icons";
 import {useAppDispatch, useAppSelector} from "~redux/store";
-import {decryptWithPassword} from "~utils/encryption.utils";
+import {generateKeyPairEncrypted} from "~utils/encryption.utils";
 import {setAuthData} from "~redux/slices/auth.slice";
 import {useNavigate} from "react-router";
 import {PasswordInput} from "~components/shared/Input";
 import {useEffect, useState} from "react";
 import {cn} from "~utils";
 
-export default function LoginPage() {
+export default function SetupPasswordPage() {
   const dispatch = useAppDispatch();
   const [password, setPassword] = useState('');
+  const [disabled, setDisabled] = useState(false);
+  const {encryptedPrivateKey} = useAppSelector(state => state.auth);
   const [message, setMessage] = useState({
     shown: false,
     isError: false,
     message: '',
   });
-  const {encryptedPrivateKey} = useAppSelector(state => state.auth);
   const navigate = useNavigate();
 
   const finish = async (e: any) => {
     e.preventDefault();
-    try {
-      const privateKey = await decryptWithPassword(encryptedPrivateKey, password);
+    if (password.trim() === '') return setMessage({
+      shown: true,
+      isError: true,
+      message: "Password is required.",
+    });
+    setDisabled(true);
+    const keyPair = await generateKeyPairEncrypted(password);
+    setMessage({
+      shown: true,
+      isError: false,
+      message: "Master password created. Login to access features now!"
+    });
+    setTimeout(() => {
       dispatch(setAuthData({
         loggedIn: true,
-        privateKey,
+        privateKey: keyPair.privateKey,
+        encryptedPrivateKey: keyPair.encryptedPrivateKey,
+        publicKey: keyPair.publicKey,
       }));
       navigate('/');
-    } catch (e) {
-      setMessage({
-        shown: true,
-        isError: true,
-        message: "Wrong password"
-      });
-    }
+    }, 2000);
   }
 
   useEffect(() => {
-    if (message.shown) setTimeout(() => {
-      setMessage({
-        ...message,
-        shown: false,
-      })
-    }, 5000);
-  }, [message.shown]);
+    if (encryptedPrivateKey) navigate('/auth/login');
+  }, [encryptedPrivateKey]);
 
   return <div className={'login'}>
     <form onSubmit={finish} className={'login-form'}>
       <div className={'title'}>
-        Login
+        Hello
       </div>
       <div className={'description'}>
-        Enter password to manage your data.
+        You need to create a password to prevent unauthorized access and encrypt sensitive data.
       </div>
       {message.shown && (
         <div className={cn('message', message.isError ? 'error' : 'success')}>
           <div className={'icon'}>
-            <FontAwesomeIcon icon={message.isError ? faWarning : faInfo}/>
+            <FontAwesomeIcon icon={message.isError ? faWarning : faInfoCircle}/>
           </div>
           {message.message}
         </div>
@@ -69,8 +72,8 @@ export default function LoginPage() {
         leftIcon={faLock}
         placeholder={'Password...'}
       />
-      <button typeof={'submit'} className={'btn-submit'}>
-        Continue <FontAwesomeIcon icon={faArrowRight} style={{marginLeft: 8}}/>
+      <button typeof={'submit'} className={'btn-submit'} disabled={disabled}>
+        Finish
       </button>
     </form>
     <div className={'credit'}>

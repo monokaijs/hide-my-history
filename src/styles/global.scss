@@ -3,12 +3,17 @@
 @tailwind utilities;
 
 .input-wrapper {
-  @apply flex flex-row p-2 bg-gray-200 items-center rounded;
+  @apply flex flex-row p-2 bg-gray-100 items-center rounded;
+
+  &:hover {
+    @apply bg-gray-200;
+  }
+
   .icon {
     @apply mr-2;
   }
   input {
-    @apply flex-1 bg-transparent outline-none;
+    @apply flex-1 bg-transparent outline-none text-gray-800;
   }
 
   .btn-util {

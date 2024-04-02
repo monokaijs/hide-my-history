@@ -1,6 +1,7 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash, faKey, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {HTMLAttributes, HTMLInputTypeAttribute, ReactNode, useEffect, useState} from "react";
+import {cn} from "~utils";
 
 interface InputProps {
   name?: string;
@@ -24,7 +25,7 @@ export default function Input(props: InputProps) {
     setValue(props.value);
   }, [props.value]);
 
-  return <div className={'input-wrapper'}>
+  return <div className={cn('input-wrapper', props.className)}>
     {props.leftIcon && (
       <FontAwesomeIcon icon={props.leftIcon} className={'icon'}/>
     )}
@@ -36,7 +37,6 @@ export default function Input(props: InputProps) {
       }}
       type={props.type}
       name={props.name}
-      className={props.className}
       placeholder={props.placeholder}
     />
     {props.affix}

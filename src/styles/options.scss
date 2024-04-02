@@ -34,3 +34,90 @@ html, body, #__plasmo {
     }
   }
 }
+
+.dashboard-layout {
+  @apply w-full h-full bg-gray-200 flex items-center justify-center shadow;
+
+  .dashboard {
+    @apply bg-white rounded-xl flex flex-row;
+    width: 600px;
+    height: 400px;
+
+    .dashboard-menu {
+      @apply w-40 py-2 flex flex-col border-r;
+
+      .logo {
+        @apply font-bold px-4 py-2;
+      }
+
+      .menu-item {
+        @apply flex flex-row gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-600 relative;
+
+        .menu-icon {
+          @apply text-gray-800;
+        }
+
+        .menu-label {
+          @apply text-gray-800;
+        }
+
+        &.selected {
+          @apply bg-gray-100 hover:bg-gray-200;
+          &:after {
+            @apply w-1 h-4 bg-gray-500 absolute right-0 rounded-bl rounded-tl;
+            content: '';
+          }
+        }
+      }
+
+      .upper-menu {
+        @apply flex-1;
+      }
+    }
+
+    .dashboard-content {
+      @apply flex flex-col flex-1 overflow-y-auto;
+    }
+  }
+}
+
+.history {
+  @apply flex flex-col flex-1 min-h-0;
+  .control {
+    @apply p-2 border-b flex flex-row gap-2;
+    .input {
+      @apply flex-1;
+    }
+
+    .btn-control {
+      @apply px-2.5 border rounded hover:border-gray-400;
+    }
+  }
+  .items-list {
+    @apply flex flex-col flex-1 overflow-y-auto;
+  }
+}
+
+.history-item {
+  @apply flex flex-row gap-2 py-2 cursor-pointer hover:bg-gray-200 px-2;
+
+  .title {
+    @apply flex-1 overflow-x-hidden overflow-ellipsis whitespace-nowrap font-semibold;
+  }
+
+  .time {
+    @apply text-gray-400;
+  }
+}
+
+.message {
+  @apply p-2 rounded flex flex-row gap-2 transition-all ease-in-out duration-300;
+
+  &.success {
+    @apply bg-green-200;
+  }
+
+  &.error {
+    @apply bg-red-200;
+  }
+}

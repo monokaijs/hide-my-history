@@ -1,21 +1,29 @@
-import styles from "@/styles/Dashboard.module.scss";
-import {ConfigProvider, Layout, Menu, theme} from "antd";
 import {persistor, store, useAppSelector} from "~redux/store";
-import { PersistGate } from "redux-persist/integration/react";
+import {PersistGate} from "redux-persist/integration/react";
 import {Provider} from "react-redux";
 import {Outlet, useLocation, useNavigate} from "react-router";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faClock, faHome} from "@fortawesome/free-solid-svg-icons";
+import {faClock, faGear, faHome, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {useEffect} from "react";
-import historyService from "~services/HistoryService";
+import {cn} from "~utils";
+
+const MenuItem = (props: { path: string, icon: IconDefinition, label: string }) => {
+  const {pathname: currentRoute} = useLocation();
+  const navigate = useNavigate();
+  return <div className={cn('menu-item', currentRoute === props.path ? 'selected' : '')} onClick={() => {
+    navigate(props.path);
+  }}>
+    <div className={'menu-icon'}>
+      <FontAwesomeIcon icon={props.icon}/>
+    </div>
+    <div className={'menu-label'}>
+      {props.label}
+    </div>
+  </div>
+}
 
 function DashboardLayoutContent({children}: any) {
   const {encryptedPrivateKey, loggedIn} = useAppSelector(state => state.auth);
-  const {
-    token: {
-      colorBgContainer
-    }
-  } = theme.useToken();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -30,55 +38,31 @@ function DashboardLayoutContent({children}: any) {
         navigate('/auth/login');
       }, 100);
     }
-
-    historyService.register().then(() => {
-      // Initialized
-    })
   }, [encryptedPrivateKey]);
 
   return <PersistGate persistor={persistor} loading={null}>
-    <ConfigProvider
-      theme={{
-        token: {
-          fontFamily: 'Lexend Deca',
-          fontSize: 14,
-        },
-      }}
-    >
-      <Layout className={styles.dashboard}>
-        <Layout.Header
-          className={styles.header}
-          style={{
-            backgroundColor: colorBgContainer
-          }}
-        >
-          <div className={styles.logo}>
-            Hide My History
-          </div>
-        </Layout.Header>
-        <Layout>
-          <Layout.Sider className={styles.sider}>
-            <Menu
-              className={styles.menu}
-              items={[{
-                key: 'home',
-                icon: <FontAwesomeIcon icon={faHome}/>,
-                label: <>Home</>,
-                onClick: () => navigate('/home'),
-              }, {
-                key: 'history',
-                icon: <FontAwesomeIcon icon={faClock}/>,
-                label: <>History</>,
-                onClick: () => navigate('/history'),
-              }]}
+    <div className={'dashboard-layout'}>
+      <div className={'dashboard'}>
+        <div className={'dashboard-menu'}>
+          <div className={'upper-menu'}>
+            <MenuItem
+              path={'/'} icon={faHome} label={'Home'}
             />
-          </Layout.Sider>
-          <Layout.Content className={styles.content}>
-            {children}
-          </Layout.Content>
-        </Layout>
-      </Layout>
-    </ConfigProvider>
+            <MenuItem
+              path={'/history'} icon={faClock} label={'History'}
+            />
+          </div>
+          <div className={'bottom-menu'}>
+            <MenuItem
+              path={'/settings'} icon={faGear} label={'Settings'}
+            />
+          </div>
+        </div>
+        <div className={'dashboard-content'}>
+          {children}
+        </div>
+      </div>
+    </div>
   </PersistGate>
 }
 
