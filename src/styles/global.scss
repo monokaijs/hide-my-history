@@ -1,5 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500&family=Lora:wght@400;500&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input-wrapper {
+  @apply flex flex-row p-2 bg-gray-200 items-center rounded;
+  .icon {
+    @apply mr-2;
+  }
+  input {
+    @apply flex-1 bg-transparent outline-none;
+  }
+
+  .btn-util {
+    @apply cursor-pointer;
+  }
+}

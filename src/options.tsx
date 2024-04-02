@@ -1,5 +1,5 @@
 import "@/styles/global.scss";
-import '@/styles/dashboard.scss';
+import '@/styles/options.scss';
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import {HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import HomePage from "@/views/Home";
