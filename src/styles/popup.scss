@@ -1,6 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500&family=Lora:wght@400;500&display=swap');
-
 body {
   margin: 0;
   padding: 0;
+}
+
+.popup-layout {
+  @apply
+    bg-gray-100 p-4 max-w-sm mx-auto shadow-md flex flex-col items-center justify-between
+    transition-all ease-in-out duration-200
+  ;
+
+  .title {
+    @apply font-semibold text-gray-700 text-lg mb-1;
+  }
+
+  .description {
+    @apply text-gray-500 text-sm font-light;
+  }
+
+  .btn-toggle-incognito {
+    @apply transition-all ease-out duration-300 flex-1 bg-black hover:bg-gray-300 text-white hover:text-black font-bold py-2 px-4 rounded;
+  }
+
+  .btn-settings {
+    @apply
+      transition-all ease-out duration-300 text-gray-600 hover:text-white hover:bg-black cursor-pointer px-4 border border-gray-300 rounded
+    ;
+  }
+
+
+  &.incognito {
+    @apply bg-black;
+
+    .title {
+      @apply text-gray-200;
+    }
+
+    .description {
+      @apply text-gray-400;
+    }
+
+
+    .btn-toggle-incognito {
+      @apply
+      bg-gray-200 text-gray-900
+      hover:bg-gray-950 hover:text-gray-300
+      ;
+    }
+
+    .btn-settings {
+      @apply text-gray-300 border-gray-800
+        hover:text-gray-100 hover:border-gray-600
+      ;
+    }
+  }
 }

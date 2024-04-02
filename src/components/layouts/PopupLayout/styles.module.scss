@@ -6,29 +6,4 @@
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  .lockIcon {
-    color: #FFFFFF22;
-    position: absolute;
-    right: -80px;
-    top: -20px;
-    font-size: 200px;
-    transform: rotate(-20deg);
-  }
-  .title {
-    margin: 0;
-  }
-  .description {
-    padding: 8px 0;
-    opacity: .6;
-
-    transition: all 300ms ease-in-out;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-  .content {
-    display: flex;
-    flex: 1;
-  }
 }

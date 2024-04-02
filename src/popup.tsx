@@ -1,3 +1,4 @@
+import "@/styles/global.scss";
 import "@/styles/popup.scss";
 import styles from "@/styles/Popup.module.scss";
 import PopupLayout from "@/components/layouts/PopupLayout";
@@ -11,37 +12,29 @@ function PopupContent() {
   const {incognitoMode} = useAppSelector(state => state.app);
   const {encryptedPrivateKey} = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
-  return <div className={styles.pageContent}>
-    <div className={styles.buttons}>
-      {encryptedPrivateKey ? <>
-        <Button
-          type={'primary'}
-          className={styles.btnMode}
-          icon={<FontAwesomeIcon icon={incognitoMode ? faEyeSlash : faEye}/>}
-          onClick={() => {
-            dispatch(setIncognitoMode(!incognitoMode));
-          }}
-        >
-          {incognitoMode ? 'Disable Incognito Mode' : 'Enable Incognito Mode'}
-        </Button>
-        <Button
-          onClick={() => {
-            chrome.runtime.openOptionsPage();
-          }}
-          icon={<FontAwesomeIcon icon={faGear}/>}
-        />
-      </>: <>
-        <Button
-          type={'primary'}
-          className={styles.btnMode}
-          icon={<FontAwesomeIcon icon={faKey}/>}
-          onClick={() => {
-            return chrome.runtime.openOptionsPage();
-          }}
-        >
-          Create Master Key
-        </Button>
-      </>}
+
+  const toggleIncognito = () => dispatch(setIncognitoMode(!incognitoMode));
+  const openSettings = () => chrome.runtime.openOptionsPage();
+
+  return <div className={'flex-1 flex flex-col justify-between'}>
+    <div className="flex flex-col">
+      <span className="title">Hide My History</span>
+      <span className="description">You're not in Incognito Mode. However, websites in whitelist will not be recorded in browser history.</span>
+    </div>
+    <div className={"flex flex-row gap-2"}>
+      <button
+        className="btn-toggle-incognito"
+        onClick={toggleIncognito}
+      >
+        <FontAwesomeIcon icon={faEye} className={'mr-1'}/>
+        {incognitoMode ? 'Disable' : 'Enable'} Incognito Mode
+      </button>
+      <button
+        className="btn-settings"
+        onClick={openSettings}
+      >
+        <FontAwesomeIcon icon={faGear}/>
+      </button>
     </div>
   </div>;
 }
