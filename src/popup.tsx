@@ -3,13 +3,14 @@ import "@/styles/popup.scss";
 import {persistor, store, useAppDispatch, useAppSelector} from "~redux/store";
 import {setIncognitoMode} from "~redux/slices/app.slice";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faGear} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRight, faEye, faGear} from "@fortawesome/free-solid-svg-icons";
 import {cn} from "~utils";
 import {Provider} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
 
 function PopupContent() {
   const {incognitoMode} = useAppSelector(state => state.app);
+  const {encryptedPrivateKey} = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
 
   const toggleIncognito = () => dispatch(setIncognitoMode(!incognitoMode));
@@ -19,22 +20,36 @@ function PopupContent() {
     <div className={'popup-content'}>
       <div className="flex flex-col">
         <span className="title">Hide My History</span>
-        <span className="description">You're not in Incognito Mode. However, websites in whitelist will not be recorded in browser history.</span>
+        <span className="description">
+          {encryptedPrivateKey ?
+            "You're not in Incognito Mode. However, websites in whitelist will not be recorded in browser history." :
+            "Please follow several steps to Hide Your History..."
+          }
+        </span>
       </div>
       <div className={"flex flex-row gap-2"}>
-        <button
-          className="btn-toggle-incognito"
-          onClick={toggleIncognito}
-        >
-          <FontAwesomeIcon icon={faEye} className={'mr-1'}/>
-          {incognitoMode ? 'Disable' : 'Enable'} Incognito Mode
-        </button>
-        <button
-          className="btn-settings"
-          onClick={openSettings}
-        >
-          <FontAwesomeIcon icon={faGear}/>
-        </button>
+        {encryptedPrivateKey ? <>
+          <button
+            className="btn-toggle-incognito"
+            onClick={toggleIncognito}
+          >
+            <FontAwesomeIcon icon={faEye} className={'mr-1'}/>
+            {incognitoMode ? 'Disable' : 'Enable'} Incognito Mode
+          </button>
+          <button
+            className="btn-settings"
+            onClick={openSettings}
+          >
+            <FontAwesomeIcon icon={faGear}/>
+          </button>
+        </> : <>
+          <button
+            className={"btn-toggle-incognito"}
+            onClick={() => chrome.runtime.openOptionsPage()}
+          >
+            Getting Started <FontAwesomeIcon icon={faArrowRight}/>
+          </button>
+        </>}
       </div>
     </div>
   </div>
