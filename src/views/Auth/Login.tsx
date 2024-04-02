@@ -48,30 +48,32 @@ export default function LoginPage() {
 
   return <div className={'login'}>
     <form onSubmit={finish} className={'login-form'}>
-      <div className={'title'}>
-        Login
-      </div>
-      <div className={'description'}>
-        Enter password to manage your data.
-      </div>
-      {message.shown && (
-        <div className={cn('message', message.isError ? 'error' : 'success')}>
-          <div className={'icon'}>
-            <FontAwesomeIcon icon={message.isError ? faWarning : faInfo}/>
-          </div>
-          {message.message}
+      <div className={'form-content'}>
+        <div className={'title'}>
+          Login
         </div>
-      )}
-      <PasswordInput
-        value={password}
-        onValueChange={value => setPassword(value)}
-        passwordToggle={true}
-        leftIcon={faLock}
-        placeholder={'Password...'}
-      />
-      <button typeof={'submit'} className={'btn-submit'}>
-        Continue <FontAwesomeIcon icon={faArrowRight} style={{marginLeft: 8}}/>
-      </button>
+        <div className={'description'}>
+          Enter password to manage your data.
+        </div>
+        {message.shown && (
+          <div className={cn('message', message.isError ? 'error' : 'success')}>
+            <div className={'icon'}>
+              <FontAwesomeIcon icon={message.isError ? faWarning : faInfo}/>
+            </div>
+            {message.message}
+          </div>
+        )}
+        <PasswordInput
+          value={password}
+          onValueChange={value => setPassword(value)}
+          passwordToggle={true}
+          leftIcon={faLock}
+          placeholder={'Password...'}
+        />
+        <button typeof={'submit'} className={'btn-submit'}>
+          Continue <FontAwesomeIcon icon={faArrowRight} style={{marginLeft: 8}}/>
+        </button>
+      </div>
     </form>
     <div className={'credit'}>
       Written by <a href={'https://delimister.com'} target={'_blank'}>@MonokaiJs</a>

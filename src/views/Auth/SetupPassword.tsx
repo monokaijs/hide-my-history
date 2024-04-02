@@ -1,5 +1,5 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faInfoCircle, faLock, faWarning} from "@fortawesome/free-solid-svg-icons";
+import {faInfoCircle, faKey, faLock, faWarning} from "@fortawesome/free-solid-svg-icons";
 import {useAppDispatch, useAppSelector} from "~redux/store";
 import {generateKeyPairEncrypted} from "~utils/encryption.utils";
 import {setAuthData} from "~redux/slices/auth.slice";
@@ -51,30 +51,33 @@ export default function SetupPasswordPage() {
 
   return <div className={'login'}>
     <form onSubmit={finish} className={'login-form'}>
-      <div className={'title'}>
-        Hello
-      </div>
-      <div className={'description'}>
-        You need to create a password to prevent unauthorized access and encrypt sensitive data.
-      </div>
-      {message.shown && (
-        <div className={cn('message', message.isError ? 'error' : 'success')}>
-          <div className={'icon'}>
-            <FontAwesomeIcon icon={message.isError ? faWarning : faInfoCircle}/>
-          </div>
-          {message.message}
+      <FontAwesomeIcon icon={faKey} className={'figure-icon'}/>
+      <div className={'form-content'}>
+        <div className={'title'}>
+          Hello
         </div>
-      )}
-      <PasswordInput
-        value={password}
-        onValueChange={value => setPassword(value)}
-        passwordToggle={true}
-        leftIcon={faLock}
-        placeholder={'Password...'}
-      />
-      <button typeof={'submit'} className={'btn-submit'} disabled={disabled}>
-        Finish
-      </button>
+        <div className={'description'}>
+          You need to create a password to prevent unauthorized access and encrypt sensitive data.
+        </div>
+        {message.shown && (
+          <div className={cn('message', message.isError ? 'error' : 'success')}>
+            <div className={'icon'}>
+              <FontAwesomeIcon icon={message.isError ? faWarning : faInfoCircle}/>
+            </div>
+            {message.message}
+          </div>
+        )}
+        <PasswordInput
+          value={password}
+          onValueChange={value => setPassword(value)}
+          passwordToggle={true}
+          leftIcon={faLock}
+          placeholder={'Password...'}
+        />
+        <button typeof={'submit'} className={'btn-submit'} disabled={disabled}>
+          Finish
+        </button>
+      </div>
     </form>
     <div className={'credit'}>
       Written by <a href={'https://delimister.com'} target={'_blank'}>@MonokaiJs</a>

@@ -10,19 +10,33 @@ html, body, #__plasmo {
 
   .login {
     .login-form {
-      @apply flex flex-col gap-2 p-4 border rounded-xl shadow;
+      @apply flex flex-col p-4 border rounded-xl shadow relative overflow-hidden;
       width: 300px;
 
-      .title {
-        @apply font-bold text-xl;
+      .figure-icon {
+        @apply absolute -right-2 -top-2 text-8xl text-gray-100 z-0 transition-all ease-in-out duration-300;
       }
 
-      .description {
-        @apply mb-2;
+      &:hover {
+        .figure-icon {
+          @apply -rotate-12 text-9xl;
+        }
       }
 
-      .btn-submit {
-        @apply bg-gray-900 text-gray-300 px-4 py-2 rounded;
+      .form-content {
+        @apply z-10 flex flex-col gap-2;
+
+        .title {
+          @apply font-bold text-xl;
+        }
+
+        .description {
+          @apply mb-2;
+        }
+
+        .btn-submit {
+          @apply bg-gray-900 text-gray-300 px-4 py-2 rounded;
+        }
       }
     }
     .credit {
