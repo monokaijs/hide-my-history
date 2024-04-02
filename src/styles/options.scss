@@ -11,7 +11,7 @@ html, body, #__plasmo {
   .login {
     .login-form {
       @apply flex flex-col p-4 border rounded-xl shadow relative overflow-hidden;
-      width: 300px;
+      width: 400px;
 
       .figure-icon {
         @apply absolute -right-2 -top-2 text-8xl text-gray-100 z-0 transition-all ease-in-out duration-300;
