@@ -6,11 +6,11 @@ import {DomainType} from "~background/context-menu";
 export async function incognitoModeStartup() {
   unifiedStore.onUpdated.addListener(store => {
     Promise.all([
-      chrome.action.setBadgeText({
-        text: store.app.incognitoMode ? 'ON' : 'OFF',
+      chrome.action.setIcon({
+        path: store.app.incognitoMode ? require("@/assets/icon-active.png") : require("@/assets/icon-inactive.png"),
       }),
-      chrome.action.setBadgeBackgroundColor({
-        color: store.app.incognitoMode ? '#000000' : '#ff4747',
+      chrome.action.setTitle({
+        title: `Incognito mode ${store.app.incognitoMode ? 'activated' : 'deactivated'}`,
       })
     ]).then(() => null);
   });
