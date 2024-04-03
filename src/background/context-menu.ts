@@ -1,5 +1,6 @@
 import unifiedStore from "~services/UnifiedStore";
 import {urlToChromeMatchPattern} from "~utils";
+import {list} from "postcss";
 
 export async function backgroundContextMenuStartup() {
   unifiedStore.onUpdated.addListener((store) => {
@@ -78,6 +79,18 @@ export async function updateExceptionList(domain: string, type: DomainType) {
     ['hmh-lists']: lists,
   });
   refreshContextMenu();
+}
+
+export async function deleteException(domain: string) {
+  const data = await chrome.storage.local.get(['hmh-lists']);
+  const lists: {
+    [domain: string]: DomainType,
+  } = data['hmh-lists'] || {};
+  delete lists[domain];
+  await chrome.storage.local.set({
+    ['hmh-lists']: lists,
+  });
+  return lists;
 }
 
 export enum DomainType {

@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
-import {DomainType, updateExceptionList} from "~background/context-menu";
+import {deleteException, DomainType, updateExceptionList} from "~background/context-menu";
 import unifiedStore from "~services/UnifiedStore";
 import {cn} from "~utils";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRight, faBox, faInfoCircle, faLink, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRight, faBox, faInfoCircle, faLink, faPlus, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import Input from "~components/shared/Input";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "~components/ui/select";
 
@@ -27,10 +27,12 @@ export default function LinkLists() {
   }, []);
 
   useEffect(() => {
-    const filtered = Object.keys(links).filter(key => {
-      return links[key] === selectedType;
-    });
-    setFilteredLinks(filtered);
+    if (links) {
+      const filtered = Object.keys(links).filter(key => {
+        return links[key] === selectedType;
+      });
+      setFilteredLinks(filtered);
+    }
   }, [links, selectedType]);
 
   const TabItem = ({title, value}: {title: string, value: DomainType}) => {
@@ -65,10 +67,24 @@ export default function LinkLists() {
         </button>
       </div>
     </div>
-    <div className={'p-2 flex flex-col flex-1'}>
+    <div className={'flex flex-col flex-1'}>
       {filteredLinks.map(item => {
-        return <div>
-          {item}
+        return <div
+          key={item}
+          className={'px-2 py-1 hover:bg-gray-100 cursor-pointer flex flex-row'}
+        >
+          <div className={'flex-1'}>
+            {item}
+          </div>
+          <div>
+            <button className={'text-gray-400 hover:text-gray-800'} onClick={() => {
+              deleteException(item).then(() => {
+                // Nothing
+              });
+            }}>
+              <FontAwesomeIcon icon={faTrashCan}/>
+            </button>
+          </div>
         </div>
       })}
       {filteredLinks.length === 0 && (
@@ -79,7 +95,10 @@ export default function LinkLists() {
           </div>
           <button
             className={'border px-3 py-1 rounded mt-3 hover:bg-gray-200 hover:text-white'}
-            onClick={() => setShowAddException(true)}
+            onClick={() => {
+              setCreationType(selectedType);
+              setShowAddException(true);
+            }}
           >
             <FontAwesomeIcon icon={faPlus}/> Add
           </button>
@@ -137,7 +156,6 @@ export default function LinkLists() {
             className={'bg-gray-900 text-white py-2 flex-1 rounded'}
             onClick={() => {
               const domain = new URL(url);
-              console.log('finish');
               updateExceptionList(domain.hostname, creationType).then(() => {
                 setShowAddException(false);
               }).catch(e => {
