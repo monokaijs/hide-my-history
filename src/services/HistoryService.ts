@@ -1,3 +1,5 @@
+import unifiedStore from "~services/UnifiedStore";
+
 export interface HistoryStoredItem {
   url: string;
   title: string;
@@ -12,6 +14,11 @@ class HistoryService {
 
   async register() {
     this.items = await this.getStoredEntry();
+    unifiedStore.onUpdated.addListener((store, rawData) => {
+      if (rawData.historyItems) {
+        this.items = rawData.historyItems;
+      }
+    })
   }
 
   async getStoredEntry(): Promise<HistoryStoredItem[]> {
@@ -32,6 +39,19 @@ class HistoryService {
       historyItems: items,
     }).then(() => null);
     return items;
+  }
+
+  async deleteEntry(timestamp: number) {
+    const items = await this.getStoredEntry();
+    return chrome.storage.local.set({
+      historyItems: items.filter(item => item.time !== timestamp),
+    });
+  }
+
+  clearStoredEntries() {
+    return chrome.storage.local.set({
+      historyItems: []
+    });
   }
 
   // Query browsing history based on time range

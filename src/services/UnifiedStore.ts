@@ -6,7 +6,7 @@ interface StoreType {
   auth: Partial<AuthSliceState>,
 }
 
-type onUpdatedFn = (store: StoreType) => any | Promise<any>;
+type onUpdatedFn = (store: StoreType, rawData: any) => any | Promise<any>;
 
 class UnifiedStore {
   rawData: any = {}
@@ -77,7 +77,7 @@ class UnifiedStore {
 
   notifyChanges() {
     for (let fn of this.onUpdated.listeners) {
-      fn(this.store);
+      fn(this.store, this.rawData);
     }
   }
 }

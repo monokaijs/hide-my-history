@@ -1,5 +1,6 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRight, faEye, faInfo, faKey, faLock, faWarning} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRight, faInfo, faLock, faWarning} from "@fortawesome/free-solid-svg-icons";
+import { Input } from "@/components/ui/input";
 import {useAppDispatch, useAppSelector} from "~redux/store";
 import {decryptWithPassword} from "~utils/encryption.utils";
 import {setAuthData} from "~redux/slices/auth.slice";
