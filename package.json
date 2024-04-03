@@ -46,16 +46,15 @@
   },
   "manifest": {
     "host_permissions": [
-      "https://*/*"
+      "https://*/*",
+      "http://*/*"
     ],
     "permissions": [
       "storage",
       "history",
-      "webNavigation",
       "favicon",
       "tabs",
-      "contextMenus",
-      "activeTab"
+      "contextMenus"
     ],
     "web_accessible_resources": [
       {
