@@ -45,8 +45,7 @@ class UnifiedStore {
     });
     // read all data
     for (let key of Object.keys(this.store)) {
-      const persistedData = this.rawData['persist:' + key];
-      const sliceData = JSON.parse(persistedData['persist:' + key] || '{}');
+      const sliceData = JSON.parse(this.rawData['persist:' + key] || '{}');
       this.acknowledgeUpdate(key, sliceData);
     }
     chrome.storage.local.onChanged.addListener(changes => {
