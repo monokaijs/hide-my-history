@@ -22,9 +22,9 @@ export async function backgroundContextMenuStartup() {
       const domain = url.hostname;
 
       if (info.menuItemId === 'blacklist') {
-        updateList(domain, (info.wasChecked && !info.checked) ? DomainType.undecided : DomainType.blacklist);
+        updateExceptionList(domain, (info.wasChecked && !info.checked) ? DomainType.undecided : DomainType.blacklist);
       } else if (info.menuItemId === 'whitelist') {
-        updateList(domain, (info.wasChecked && !info.checked) ? DomainType.undecided : DomainType.whitelist);
+        updateExceptionList(domain, (info.wasChecked && !info.checked) ? DomainType.undecided : DomainType.whitelist);
       }
     }
     unifiedStore.setSlice('app', appSlice);
@@ -68,7 +68,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-async function updateList(domain: string, type: DomainType) {
+export async function updateExceptionList(domain: string, type: DomainType) {
   const data = await chrome.storage.local.get(['hmh-lists']);
   const lists: {
     [domain: string]: DomainType,

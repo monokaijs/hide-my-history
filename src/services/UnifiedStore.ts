@@ -40,9 +40,12 @@ class UnifiedStore {
   }
 
   async register() {
+    this.rawData = await new Promise(response => {
+      chrome.storage.local.get(null, (data) => response(data));
+    });
     // read all data
     for (let key of Object.keys(this.store)) {
-      const persistedData = await chrome.storage.local.get(['persist:' + key]);
+      const persistedData = this.rawData['persist:' + key];
       const sliceData = JSON.parse(persistedData['persist:' + key] || '{}');
       this.acknowledgeUpdate(key, sliceData);
     }

@@ -1,6 +1,8 @@
 .home {
+  @apply flex-1 flex flex-col;
+
   .widgets {
-    @apply flex flex-grow gap-3 p-3;
+    @apply flex flex-row gap-3 p-3;
     .widget {
       @apply flex-1 flex flex-col border p-2 shadow rounded relative overflow-hidden;
       height: 100px;

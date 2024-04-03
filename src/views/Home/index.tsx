@@ -3,6 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClock, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {useAppDispatch, useAppSelector} from "~redux/store";
 import {setIncognitoMode} from "~redux/slices/app.slice";
+import LinkLists from "~components/app/LinkLists";
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
@@ -52,5 +53,6 @@ export default function HomePage() {
         </label>
       </div>
     </div>
+    <LinkLists/>
   </div>
 }

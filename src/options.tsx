@@ -8,8 +8,13 @@ import AuthLayout from "~components/layouts/AuthLayout";
 import LoginPage from "~views/Auth/Login";
 import SetupPasswordPage from "~views/Auth/SetupPassword";
 import AboutPage from "~views/About";
+import {useEffect} from "react";
+import unifiedStore from "~services/UnifiedStore";
 
 export default function OptionsPage() {
+  useEffect(() => {
+    unifiedStore.register().then(() => {});
+  }, []);
   return <HashRouter>
     <Routes>
       <Route path={'/'} element={<DashboardLayout/>}>
