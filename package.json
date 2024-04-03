@@ -2,7 +2,7 @@
   "name": "hide-my-history",
   "displayName": "Hide my history",
   "version": "0.0.1",
-  "description": "Hide your browsing history",
+  "description": "A better way to hide your browsing history",
   "author": "Edward Nguyen <edward@delimister.com>",
   "scripts": {
     "dev": "plasmo dev",
