@@ -45,6 +45,7 @@ export default function HomePage() {
         <label className="inline-flex items-center cursor-pointer">
           <input
             type="checkbox" className="sr-only peer"
+            checked
             disabled
           />
           <div
