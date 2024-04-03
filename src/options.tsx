@@ -12,9 +12,6 @@ import {useEffect} from "react";
 import unifiedStore from "~services/UnifiedStore";
 
 export default function OptionsPage() {
-  useEffect(() => {
-    unifiedStore.register().then(() => {});
-  }, []);
   return <HashRouter>
     <Routes>
       <Route path={'/'} element={<DashboardLayout/>}>

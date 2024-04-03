@@ -1,4 +1,4 @@
-import {persistor, store, useAppSelector} from "~redux/store";
+import {persistor, store, useAppDispatch, useAppSelector} from "~redux/store";
 import {PersistGate} from "redux-persist/integration/react";
 import {Provider} from "react-redux";
 import {Outlet, useLocation, useNavigate} from "react-router";
@@ -6,6 +6,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClock, faGear, faHome, faInfoCircle, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {useEffect} from "react";
 import {cn} from "~utils";
+import unifiedStore from "~services/UnifiedStore";
+import {setIncognitoMode} from "~redux/slices/app.slice";
 
 const MenuItem = (props: { path: string, icon: IconDefinition, label: string }) => {
   const {pathname: currentRoute} = useLocation();
@@ -24,8 +26,10 @@ const MenuItem = (props: { path: string, icon: IconDefinition, label: string }) 
 
 function DashboardLayoutContent({children}: any) {
   const {encryptedPrivateKey, loggedIn} = useAppSelector(state => state.auth);
+  const {incognitoMode} = useAppSelector(state => state.app);
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!encryptedPrivateKey && !location.pathname.startsWith('/auth/setup-password')) {
@@ -39,6 +43,15 @@ function DashboardLayoutContent({children}: any) {
       }, 100);
     }
   }, [encryptedPrivateKey]);
+
+  useEffect(() => {
+    unifiedStore.onUpdated.addListener((store) => {
+      if (store.app.incognitoMode !== incognitoMode) {
+        dispatch(setIncognitoMode(store.app.incognitoMode));
+      }
+    })
+    unifiedStore.register().then(() => {});
+  }, []);
 
   return <PersistGate persistor={persistor} loading={null}>
     <div className={'dashboard-layout'}>
