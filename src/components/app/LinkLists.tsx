@@ -21,7 +21,6 @@ export default function LinkLists() {
 
   useEffect(() => {
     unifiedStore.onUpdated.addListener(() => {
-      console.log(unifiedStore.rawData['hmh-lists']);
       setLinks(unifiedStore.rawData['hmh-lists']);
     })
   }, []);
