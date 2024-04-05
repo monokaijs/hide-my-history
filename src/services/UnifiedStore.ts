@@ -74,6 +74,7 @@ class UnifiedStore {
       }
     }
     this.store[key] = parsedData;
+    console.log('acknowledged', key, parsedData);
     return parsedData;
   }
 
