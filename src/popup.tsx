@@ -22,7 +22,11 @@ function PopupContent() {
         <span className="title">Hide My History</span>
         <span className="description">
           {encryptedPrivateKey ?
-            "You're not in Incognito Mode. However, websites in whitelist will not be recorded in browser history." :
+            <>
+              {incognitoMode ?
+                "You're in Incognito Mode, website in blacklist will still be recorded." :
+                "You're not in Incognito Mode. However, websites in whitelist will not be recorded in browser history."}
+            </> :
             "Please follow several steps to Hide Your History..."
           }
         </span>
