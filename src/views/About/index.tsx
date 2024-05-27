@@ -15,7 +15,7 @@ export default function AboutPage() {
       </p>
     </div>
     <div className={'mt-4'}>
-      Want to contribute? <a href={'https://github.com/hide-my-history'} className={'underline'}>Source code.</a>
+      Want to contribute? <a href={'https://github.com/monokaijs/hide-my-history'} className={'underline'}>Source code.</a>
     </div>
   </div>
 }
